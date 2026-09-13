@@ -1,104 +1,181 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ptr = document.getElementById('pull-to-refresh');
-    const spinner = ptr ? ptr.querySelector('.spinner-icon') : null;
 
-    if (!ptr || !spinner) return;
+    const menuToggle = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('nav');
+
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+    }
+
+    const ptr = document.getElementById('pull-to-refresh');
+    const spinner = ptr?.querySelector('.spinner-icon');
 
     let startY = 0;
     let currentY = 0;
     let pulling = false;
-    const threshold = 80;
+    let refreshing = false;
 
-    const onStart = (e) => {
-        if (window.scrollY === 0) {
-            startY = e.touches ? e.touches[0].pageY : e.pageY;
-            pulling = true;
-        }
-    };
+    const threshold = 100;
 
-    const onMove = (e) => {
-        if (!pulling) return;
 
-        currentY = e.touches ? e.touches[0].pageY : e.pageY;
-        const diff = currentY - startY;
+    function resetPull() {
+        if (!ptr) return;
 
-        if (diff > 0 && window.scrollY === 0) {
-            if (e.cancelable) {
-                e.preventDefault();
-            }
-
-            const pullDistance = Math.min(diff * 0.4, 80);
-
-            ptr.style.top = `${pullDistance - 50}px`;
-            ptr.style.opacity = Math.min(diff / threshold, 1);
-
-            spinner.style.transform = `rotate(${diff * 2}deg)`;
-        } else {
-            pulling = false;
-            ptr.style.top = '-60px';
-            ptr.style.opacity = '0';
-        }
-    };
-
-    const onEnd = () => {
-        if (!pulling) return;
-        pulling = false;
-
-        const diff = currentY - startY;
-
-        if (diff >= threshold && window.scrollY === 0) {
-            ptr.style.top = '20px';
-            ptr.classList.add('refreshing');
-            spinner.style.transform = '';
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 600);
-        } else {
-            ptr.style.top = '-60px';
-            ptr.style.opacity = '0';
-        }
+        ptr.style.transform = 'translateX(-50%) translateY(0)';
+        ptr.style.opacity = '0';
+        ptr.classList.remove('refreshing');
 
         startY = 0;
         currentY = 0;
-    };
-
-    window.addEventListener('touchstart', onStart, { passive: true });
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onEnd);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('nav');
-    const navLinks = document.querySelectorAll('nav a');
-
-    if (mobileBtn && navMenu) {
-        mobileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navMenu.classList.toggle('active');
-        });
+        pulling = false;
     }
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navMenu) {
-                navMenu.classList.remove('active');
+
+    function onTouchStart(event) {
+        if (refreshing || !event.touches?.length) return;
+
+        if (window.scrollY > 0) {
+            startY = 0;
+            return;
+        }
+
+        startY = event.touches[0].clientY;
+        currentY = startY;
+        pulling = false;
+    }
+
+
+    function onTouchMove(event) {
+        if (!startY || refreshing || !event.touches?.length) {
+            return;
+        }
+
+        currentY = event.touches[0].clientY;
+
+        const diff = currentY - startY;
+
+        if (window.scrollY > 0) {
+            resetPull();
+            return;
+        }
+
+        if (diff <= 0) {
+            if (pulling) {
+                resetPull();
             }
+
+            return;
+        }
+
+        if (diff < 10) {
+            return;
+        }
+
+
+        pulling = true;
+
+        const distance = Math.min(diff * 0.5, 70);
+
+        const opacity = Math.min(
+            diff / threshold,
+            1
+        );
+
+
+        if (ptr) {
+            ptr.style.transform =
+                `translateX(-50%) translateY(${distance}px)`;
+
+            ptr.style.opacity = opacity;
+        }
+    }
+
+
+    function onTouchEnd() {
+
+        if (!startY || refreshing) {
+            resetPull();
+            return;
+        }
+
+        const diff = currentY - startY;
+
+        if (
+            pulling &&
+            diff >= threshold &&
+            window.scrollY <= 0
+        ) {
+
+            refreshing = true;
+
+            if (ptr) {
+                ptr.style.transform =
+                    'translateX(-50%) translateY(70px)';
+
+                ptr.style.opacity = '1';
+
+                ptr.classList.add('refreshing');
+            }
+
+            if (spinner) {
+                spinner.style.transform = '';
+            }
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+
+
+            return;
+        }
+
+
+        resetPull();
+    }
+
+
+    window.addEventListener(
+        'touchstart',
+        onTouchStart,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        'touchmove',
+        onTouchMove,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        'touchend',
+        onTouchEnd,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        'touchcancel',
+        resetPull,
+        { passive: true }
+    );
+
+    if (typeof AOS !== 'undefined') {
+
+        AOS.init({
+            duration: 700,
+            once: true,
+            offset: 0
         });
-    });
 
-    document.addEventListener('click', (e) => {
-        if (navMenu && navMenu.classList.contains('active')) {
-            if (!navMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
-                navMenu.classList.remove('active');
-            }
-        }
-    });
+    }
 
-    window.addEventListener('scroll', () => {
-        if (navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-        }
-    }, { passive: true });
 });

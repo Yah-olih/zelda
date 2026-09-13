@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" href="imagens/logo-sem descricao.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link
     href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@500;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
     rel="stylesheet">
@@ -17,6 +16,8 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 </head>
 
 <body>
@@ -70,15 +71,14 @@
       <div class="handwritten-tag" data-aos="zoom-in" data-aos-duration="800" data-aos-anchor-placement="bottom-bottom">
         <span>Seu cabelo,</span>
         <span>nossa paixão!</span>
-        <div class="heart">♡</div>
+        <div id="servico" class="heart">♡</div>
       </div>
 
     </div>
   </section>
 
-  <!-- SERVIÇOS -->
-  <section class="services" id="servico" data-aos="fade-up">
-    <div class="section-title-container" data-aos="fade-up">
+  <section class="services">
+    <div class="section-title-container animate-services-load">
       <div class="header-line"></div>
       <div class="section-header-text">
         <span class="section-subtitle">NOSSOS SERVIÇOS</span>
@@ -90,7 +90,7 @@
 
       <!-- CORTE -->
       <a href="https://wa.me/5511962594620?text=Ol%C3%A1!%20Gostaria%20de%20saber%20o%20valor%20do%20servi%C3%A7o%20de%20Corte.%20%F0%9F%98%8A"
-        class="service-card" target="_blank" data-aos="fade-up" data-aos-delay="100">
+        class="service-card" target="_blank" data-aos="fade-up" data-aos-delay="50">
 
         <div class="icon-circle">
           <i class="ph ph-scissors"></i>
@@ -199,24 +199,19 @@
 
       <div class="gallery-grid">
         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=400&auto=format&fit=crop"
-            alt="Cabelo Ruivo Ondulado">
+          <img src="imagens/img001.png" alt="Cabelo Ruivo Ondulado">
         </div>
         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-          <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=400&auto=format&fit=crop"
-            alt="Cabelo Morena Iluminada">
+          <img src="imagens/img002.png" alt="Cabelo Morena Iluminada">
         </div>
         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-          <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=400&auto=format&fit=crop"
-            alt="Cabelo Loiro Ondulado">
+          <img src="imagens/img003.png" alt="Cabelo Loiro Ondulado">
         </div>
         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
-          <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?q=80&w=400&auto=format&fit=crop"
-            alt="Cabelo Vermelho Intenso">
+          <img src="imagens/img004.png" alt="Cabelo Vermelho Intenso">
         </div>
         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="500">
-          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=400&auto=format&fit=crop"
-            alt="Cabelo Escuro Ondulado">
+          <img src="imagens/img06.png" alt="Cabelo Escuro Ondulado">
         </div>
       </div>
     </div>
@@ -260,14 +255,8 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>
