@@ -1,4 +1,3 @@
-/* 1. RESET E VARIÁVEIS GLOBAIS */
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +18,6 @@
     --font-hand: 'Caveat', cursive;
 }
 
-/* 2. ESTRUTURA BASE DA PÁGINA */
 html {
     width: 100%;
     overflow-x: hidden;
@@ -187,8 +185,6 @@ nav a.active {
     object-fit: contain;
 }
 
-/* 5. HERO SECTION (DESKTOP) */
-/* 5. HERO SECTION (DESKTOP) */
 .hero-banner {
     width: 100%;
     min-height: 580px;
@@ -196,28 +192,23 @@ nav a.active {
     display: flex;
     align-items: flex-end;
     padding: 100px 0 0 0;
-    /* Aumentado para 100px para o menu fixo não cobrir o topo do conteúdo */
     position: relative;
     overflow: hidden;
 }
 
 .hero-container {
     max-width: 100%;
-    /* Permite que a foto vá até o fim da tela no desktop */
     width: 100%;
     margin: 0;
     padding: 0 0 0 60px;
-    /* Folga apenas na esquerda para o bloco de texto */
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    /* Dá mais espaço para a foto crescer */
     grid-template-areas: "texto imagem";
     align-items: flex-end;
     gap: 0px;
     position: relative;
 }
 
-/* BLOCO DE TEXTO CENTRALIZADO IGUAL À REFERÊNCIA */
 .hero-content {
     grid-area: texto;
     display: flex;
@@ -228,7 +219,6 @@ nav a.active {
     z-index: 2;
 }
 
-/* FOTO AMPLIADA E TOTALMENTE ENCOSTADA NA BORDA DIREITA E NA BASE */
 .hero-image-area {
     grid-area: imagem;
     position: relative;
@@ -237,13 +227,11 @@ nav a.active {
     align-items: flex-end;
     width: 100%;
     margin-right: -40px;
-    /* Elimina a folga preta da borda direita */
 }
 
 .hero-image-area img {
     width: 100%;
     max-width: 580px;
-    /* Aumentado para dar destaque e presença no desktop */
     height: auto;
     display: block;
     object-fit: contain;
@@ -254,7 +242,6 @@ nav a.active {
     transform-origin: bottom right;
 }
 
-/* ESTILOS DOS TEXTOS */
 .subtitle-welcome {
     font-size: 15px;
     letter-spacing: 4px;
@@ -328,10 +315,9 @@ nav a.active {
 
 .btn-agendar i {
     font-size: 20px;
-    color: #111111 !important;
+    color: #1c4d10 !important;
 }
 
-/* FRASE MANUSCRITA SOBRE A IMAGEM */
 .handwritten-tag {
     position: absolute;
     bottom: 25px;
@@ -357,15 +343,12 @@ nav a.active {
 }
 
 /* 6. SERVIÇOS */
-
-/* 6. SERVIÇOS */
 .services {
     padding: 70px 0;
     text-align: center;
     border-top: 1px solid rgba(212, 175, 55, 0.15);
 }
 
-/* ESTRUTURA COM LINHAS LATERAIS */
 .section-title-container {
     display: flex;
     align-items: center;
@@ -673,9 +656,17 @@ footer {
     color: var(--text-muted);
 }
 
-/* 10. RESPONSIVIDADE (TABLET & MOBILE) */
+.whatsapp-color {
+    color: #1c4d10 !important;
+}
 
-/* MEDIA QUERY EXCLUSIVA PARA TABLETS (601px até 1024px) */
+.instagram-color {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
 @media (min-width: 601px) and (max-width: 1024px) {
     .hero-banner {
         padding: 90px 20px 0 20px;
@@ -715,7 +706,6 @@ footer {
         bottom: 15px;
     }
 
-    /* GRID DE SERVIÇOS EM 3 COLUNAS PARA TABLET */
     .services-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
@@ -727,7 +717,6 @@ footer {
     }
 }
 
-/* RESPONSIVIDADE MOBILE (ATÉ 600px) */
 @media (max-width: 600px) {
 
     .hero-image-area img {
@@ -736,7 +725,6 @@ footer {
         height: auto;
         object-fit: contain;
         transform: scale(1);
-        /* O efeito esfumado é aplicado APENAS no celular */
         -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
         mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
     }
@@ -771,7 +759,6 @@ footer {
         display: block;
     }
 
-    /* BANNER EM COLUNA */
     .hero-banner {
         padding: 70px 15px 30px 15px;
         min-height: auto;
@@ -790,7 +777,6 @@ footer {
         grid-template-areas: none;
     }
 
-    /* FOTO NO CELULAR */
     .hero-image-area {
         position: relative;
         width: 100%;
@@ -810,7 +796,6 @@ footer {
         transform: scale(1);
     }
 
-    /* CONTEÚDO DE TEXTO NO CELULAR */
     .hero-content {
         position: relative;
         z-index: 2;
@@ -891,17 +876,13 @@ footer {
     .footer-content {
         flex-direction: column;
         align-items: center;
-        /* Centraliza os itens de contato horizontalmente */
         text-align: center;
-        /* Centraliza o texto interno dos blocos */
         padding-left: 0;
-        /* Remove a margem lateral que puxava para a esquerda */
         gap: 25px;
     }
 
     .contact-item {
         justify-content: center;
-        /* Centraliza o ícone junto com o texto de cada contato */
         width: 100%;
     }
 
@@ -920,13 +901,11 @@ footer {
     .header-line {
         height: 1px;
         background: rgba(212, 175, 55, 0.4);
-        /* Cor fixa dourada suave para a linha aparecer no celular */
         max-width: 100%;
     }
 
     .section-title {
         font-size: 22px;
         white-space: nowrap;
-        /* Impede que o título quebre linha desnecessariamente */
     }
 }
